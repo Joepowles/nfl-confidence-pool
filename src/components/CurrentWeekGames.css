@@ -1,0 +1,39 @@
+/* Specific styles for the CurrentWeekGames component */
+.current-week-games {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .games-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .game {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .team {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .team img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  .game-time {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  

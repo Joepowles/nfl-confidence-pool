@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from './components/Header';
-import Pool from './components/Pool';
-import Register from './components/Register';
 import Login from './components/Login';
+import Register from './components/Register';
 import Profile from './components/Profile';
-import './App.css';
+import CurrentWeekGames from './components/CurrentWeekGames';
+import Header from './components/Header';
+import { jwtDecode } from 'jwt-decode'; // Correct the import
 
 function App() {
-  const [auth, setAuth] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const logout = () => {
-    setAuth(null);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { username, isAdmin } = jwtDecode(token); // Adjust based on your JWT payload
+      setUsername(username);
+      setIsAdmin(isAdmin);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setUsername(null);
+    setIsAdmin(false);
+    window.location.href = '/login'; // Simple page reload for logout
   };
 
   return (
     <Router>
+      <Header username={username} isAdmin={isAdmin} onLogout={handleLogout} />
       <div className="App">
-        <Header auth={auth} logout={logout} />
         <Routes>
-          <Route path="/" element={auth ? <Pool /> : <Login setAuth={setAuth} />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login setAuth={setAuth} />} />
-          <Route path="/profile" element={auth ? <Profile auth={auth} /> : <Login setAuth={setAuth} />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<CurrentWeekGames />} />
         </Routes>
       </div>
     </Router>

@@ -1,19 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './Header.css'; // Only if specific styles are needed
 
-const Header = ({ auth, logout }) => {
+const Header = ({ username, isAdmin, onLogout }) => {
   return (
-    <header>
-      <h1>Next Level Win</h1>
-      <nav>
-        {auth ? (
+    <header className="header">
+      <div className="logo">
+        <h1>Next Level Win</h1>
+      </div>
+      <nav className="nav">
+        {!username ? (
           <>
-            <span>Welcome, <a href="/profile">{auth.username}</a>!</span>
-            <button onClick={logout}>Logout</button>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
           </>
         ) : (
           <>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+            <span>Welcome, <Link to="/profile">{username}</Link>!</span>
+            <button onClick={onLogout}>Logout</button>
           </>
         )}
       </nav>
