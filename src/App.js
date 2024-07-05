@@ -5,7 +5,7 @@ import Register from './components/Register';
 import Profile from './components/Profile';
 import CurrentWeekGames from './components/CurrentWeekGames';
 import Header from './components/Header';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 
 function App() {
   const [username, setUsername] = useState(null);
@@ -33,18 +33,22 @@ function App() {
   };
 
   return (
-    <Router>
+    <div className="App">
       <Header username={username} isAdmin={isAdmin} onLogout={handleLogout} />
-      <div className="App">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<CurrentWeekGames />} />
-        </Routes>
-      </div>
-    </Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={<CurrentWeekGames />} />
+      </Routes>
+    </div>
   );
 }
 
-export default App;
+export default function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}

@@ -8,8 +8,8 @@ const CurrentWeekGames = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
-        const response = await axios.get('/current-week-games', {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('/api/current-week-games', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setGames(response.data.games);
