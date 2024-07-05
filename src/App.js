@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Login from './components/Login';
 import Register from './components/Register';
 import Profile from './components/Profile';
 import CurrentWeekGames from './components/CurrentWeekGames';
 import Header from './components/Header';
-import { jwtDecode } from 'jwt-decode'; // Correct the import
+import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [username, setUsername] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      const { username, isAdmin } = jwtDecode(token); // Adjust based on your JWT payload
-      setUsername(username);
-      setIsAdmin(isAdmin);
+      try {
+        const decoded = jwtDecode(token);
+        setUsername(decoded.username);
+        setIsAdmin(decoded.isAdmin);
+      } catch (error) {
+        console.error('Invalid token:', error);
+      }
     }
   }, []);
 
@@ -24,7 +29,7 @@ function App() {
     localStorage.removeItem('token');
     setUsername(null);
     setIsAdmin(false);
-    window.location.href = '/login'; // Simple page reload for logout
+    navigate('/login');
   };
 
   return (

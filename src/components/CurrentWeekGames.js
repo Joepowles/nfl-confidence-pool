@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './CurrentWeekGames.css'; // Only if specific styles are needed
+import './CurrentWeekGames.css';
 
 const CurrentWeekGames = () => {
   const [games, setGames] = useState([]);
@@ -8,7 +8,7 @@ const CurrentWeekGames = () => {
   useEffect(() => {
     const fetchGames = async () => {
       try {
-        const token = localStorage.getItem('token'); // Adjust based on how you store the token
+        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
         const response = await axios.get('/current-week-games', {
           headers: { Authorization: `Bearer ${token}` },
         });
